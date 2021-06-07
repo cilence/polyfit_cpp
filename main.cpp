@@ -25,10 +25,10 @@ int main(int argc, const char *argv[]) {
     }
 
     y.push_back(0.0);
-    y.push_back(0.8);
-    y.push_back(0.9);
-    y.push_back(0.1);
-    y.push_back(-0.8);
+    y.push_back(0.2);
+    y.push_back(0.3);
+    y.push_back(0.2);
+    y.push_back(0.0);
     y.push_back(-0.1);
 
 //    std::vector<double> coeff = polyfit_boost(x, y, 3);
@@ -49,13 +49,13 @@ int main(int argc, const char *argv[]) {
 //        std::cout << *it << " ";
 //    std::cout << "\n\n";
     auto start = system_clock::now();
-    std::vector<double> coeffJacobi = polyfit_Eigen(x, y, 3);
+    std::vector<double> coeffJacobi = polyfit_Eigen(x, y, 5);
     auto end = system_clock::now();
     auto duration = duration_cast<microseconds>(end - start);
     std::cout << "coeffJacobi花费时间： " << duration.count() << "微妙" << '\n';
 
     start = system_clock::now();
-    std::vector<double> coeffHouseholder = polyfit_Eigen(x, y, 3, std::vector<double>(), false);
+    std::vector<double> coeffHouseholder = polyfit_Eigen(x, y, 5, std::vector<double>(), false);
     end = system_clock::now();
     duration = duration_cast<microseconds>(end - start);
     std::cout << "coeffHouseholder花费时间： " << duration.count() << "微妙" << '\n';

@@ -16,12 +16,13 @@ std::vector<T> polyfit_Eigen(const std::vector<T> &xValues, const std::vector<T>
     using namespace Eigen;
     
     bool useWeights = weights.size() > 0 && weights.size() == xValues.size();
+    std::cout << "use weight :" << useWeights << "\n";
     
     int numCoefficients = degree + 1;
     size_t nCount = xValues.size();
     
-    MatrixXf X(nCount, numCoefficients);
-    MatrixXf Y(nCount, 1);
+    MatrixXd X(nCount, numCoefficients);
+    MatrixXd Y(nCount, 1);
     
     // fill Y matrix
     for (size_t i = 0; i < nCount; i++)
@@ -35,7 +36,7 @@ std::vector<T> polyfit_Eigen(const std::vector<T> &xValues, const std::vector<T>
     // fill X matrix (Vandermonde matrix)
     for (size_t nRow = 0; nRow < nCount; nRow++)
     {
-        T nVal = 1.0f;
+        T nVal = 1.0;
         for (int nCol = 0; nCol < numCoefficients; nCol++)
         {
             if (useWeights)
@@ -46,7 +47,7 @@ std::vector<T> polyfit_Eigen(const std::vector<T> &xValues, const std::vector<T>
         }
     }
     
-    VectorXf coefficients;
+    VectorXd coefficients;
     if (useJacobi)
         coefficients = X.jacobiSvd(ComputeThinU | ComputeThinV).solve(Y);
     else
